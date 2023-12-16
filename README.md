@@ -25,6 +25,7 @@ In this project we will analyze different systems and come up with a through int
     - [ ] Derive the wave equation on a sphere
     - [ ] Try to solve it Analytically
     - [ ] General Solutions? Numerical Fourier Series in 2D?
+    - [ ] Green Function?
     - [ ] Periodic Boundary Conditions
     - [ ] Can we use it to send information?
 1. References
