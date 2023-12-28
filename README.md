@@ -1,4 +1,6 @@
-# Periodic Boundary Conditions and Symmetries
+# Exploring Periodic Boundary Conditions: A Study on 2D and 3D Spheres and Continuum Limit
+### Physics students do math as they wish :)
+
 In this project we will analyze different systems and come up with a through introduction to the mathematical theories behind PDEs governing this weird phenomena. We will also implement a numerical solver for the PDEs and use it to simulate the systems. This will be done mainly in LaTeX and Python. Figures all made in LaTeX PGFPlots. We will create Figures by Ipe and Tikz. We will use GitHub for version control and collaboration.
 
 ## Sections
