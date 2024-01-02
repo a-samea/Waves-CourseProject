@@ -1,0 +1,5 @@
+{
+    "julia.environmentPath": "/home/fox/Documents/Projects/Waves-CourseProject/Simulations",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.typeCheckingMode": "basic"
+}

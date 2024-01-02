@@ -1,3 +1,4 @@
+% !TeX spellcheck = en_US
 %% 
 %% Copyright 2007-2020 Elsevier Ltd
 %% 
@@ -112,7 +113,7 @@
 
 \begin{abstract}
 %% Text of abstract
-Example abstract for the Annals of Physics journal. Here you provide a brief summary of the research and the results.
+We analyze systems with periodic boundary conditions in two and three dimensions. Beginning with an $N$-particle system confined to a circle, we derive the governing ordinary differential equation and solve it both analytically using circulant matrices and numerically. We then take the continuum limit as $N$ goes to infinity to obtain a wave equation on the circle with periodic boundary conditions. This partial differential equation is solved exactly, allowing us to construct visualizations of the propagating waves. Next we study an $N$-particle system confined to the surface of a regular polyhedron, deriving the discrete equations and solving numerically using symmetry arguments. We then discuss statistical mechanics approaches for this system. Finally, we analyze longitudinal elastic waves propagating on a sphere, deriving the continuum wave equation in spherical coordinates and discussing analytical and numerical solution methods based on spectral decomposition. Throughout we emphasize the mathematical physics, solving equations analytically where possible and numerically otherwise. Results for all systems are illustrated through figures.
 \end{abstract}
 
 %%Graphical abstract
@@ -128,7 +129,7 @@ Example abstract for the Annals of Physics journal. Here you provide a brief sum
 
 \begin{keyword}
 %% keywords here, in the form: keyword \sep keyword, up to a maximum of 6 keywords
-keyword 1 \sep keyword 2 \sep keyword 3 \sep keyword 4
+Particle Systems \sep Mathematical Physics \sep Fourier Analysis \sep Differential Equations \sep Continuum Limit \sep Periodic Symmetry \sep Platonic Solids
 
 %% PACS codes here, in the form: \PACS code \sep code
 
@@ -148,12 +149,21 @@ keyword 1 \sep keyword 2 \sep keyword 3 \sep keyword 4
 
 \section{Introduction}
 \label{introduction}
+Periodic boundary conditions arise naturally in the study of waves and particles constrained to closed topologies. The mathematics of such systems, though conceptually simple, reveals rich physical behaviors. In one dimension, systems with periodic boundaries can be solved exactly, yielding insights into phenomena from quantum mechanics to elasticity. As the dimension increases, new challenges emerge. On a circle, the topology is uniform and easily parametrized, yielding to straightforward analysis via Fourier decomposition. On a sphere, the additional dimension introduces variability in the surface curvature, requiring more advanced methods like spherical harmonics. In three dimensions, modeling particles or waves constrained to regular convex polyhedra brings deeper obstacles, as these Platonic solids resist exact geometric parameterization.
 
-\section{1D Spheres Revisited}
-\label{sec-1D}
-As it is done in many standard textbooks (see \cite{georgiPhysicsWaves2015}), the simple case of modeling a disturbance through a circular rod can be first modeled by considering two fundamental assumptions: Firstly, Interactions is only between neighboring particles. They cannot have a significant effect on far away neighbors, this property is what makes studying waves interesting. Secondly, the force between particles is approximately linear with respect to change of distance relative to their equilibrium distance. Although these two conditions make such great restrictions on the model that we are studying. It is rather accurate in the relatively accurate measurements made.
+Approximation methods must therefore complement exact mathematical techniques in exploring these systems. The interplay of analytical, numerical, and geometric ideas is what makes periodic systems fascinating to study. When symmetry allows clean solutions, the mathematics elegantly explains the physics. And when intricacies of higher dimensions obstruct analysis, numerical methods and geometric intuition guide the way.
 
-Consider a circle of radius $R$ with $N$ particles with same mass $m$ evenly distributed on the circle. With the assumptions made we can consider $N$ springs with spring constants $k$ identical to each other. This system experiences a symmetry called \textit{“Periodic Symmetry”}. As from rotation of $2\pi/N$ on either directions or reflections on either vertices we get the same system again. Our description should not make any distinction between these $2N$ cases. There is another free parameter in the  Question which is the initial position of on of the particles. As this is not measurable due to need for setting a starting point on circle we have all the information to describe the system. Figure \ref{fig-n4} shows the system for the special case $N=4$.
+In this Article, we embark on a mathematical tour of periodic boundaries in multiple dimensions. We begin with approachable problems, deriving and solving ordinary differential equations through matrix techniques. Moving to continuous systems, we encounter tractable partial differential equations which yield to Fourier analysis. Finally, we contend with intricate geometries, wrestling with equations which only numerical computation can conquer. What ties these investigations together is the quest to understand systems constrained to live within themselves, endowed with a symmetry as beautiful as it is challenging.
+
+\section{2D Spheres Revisited}
+\label{sec-2D}
+As established in foundational texts on wave phenomena (see \cite{georgiPhysicsWaves2015}), a prototypical model for cyclic wave propagation considers a discrete set of point particles confined to a circular domain. This framework relies on two key approximations: first, that interactions are strictly local, with each particle only directly influencing its immediate neighbors. Second, that the interparticle forces respond linearly to changes in separation relative to an equilibrium length. While undeniably reductionist, these assumptions prove sufficient to capture the salient physics of transverse wave transmission through the medium.
+
+Specifically, we examine a system of N identical particles of mass m regularly spaced around a ring of radius R. Identical harmonic springs, characterized by force constant k, link adjacent particles along the circumference. This geometry exhibits a continuous rotational symmetry - rotations by 2pi/N map the configuration onto itself. Our theoretical description should therefore not differentiate between the 2N symmetry-equivalent orientations. The sole measurable degree of freedom lies in the particles' relative displacements, as absolute positions along the circle can not be experimentally determined without first arbitrarily fixing a reference point.
+
+The simplicity of this model, alongside its inherent periodicity, motivate its study before tackling more intricate geometries in higher dimensions. Even within the confines of localized, linear interactions, analytical and computational techniques reveal rich wave behaviors arising from the cyclic topology. The mathematics provides profound and elegant insight into the underlying physics.
+
+As an elementary example, Figure 1 illustrates the case for N=4 particles. The fourfold rotational symmetry is evident, as is the periodic nature of the circular boundary. With the model established, we now embark on an in-depth analysis.
 
 \begin{figure}
 	\centering 
@@ -162,7 +172,6 @@ Consider a circle of radius $R$ with $N$ particles with same mass $m$ evenly dis
 	\label{fig-n4}
 \end{figure}
 
-We want to derive the general formula for the N particle case from this simplified case.
 
 
 
