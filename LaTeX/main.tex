@@ -37,8 +37,29 @@
 %% please give \usepackage{epsfig}
 
 %% The amssymb package provides various useful mathematical symbols
-\usepackage{amssymb}
+\usepackage{amsmath,amsfonts,amssymb,amscd,amsthm,xspace,bm}
+\usepackage{mathtools}
 \usepackage{lipsum}
+\usepackage[pdfpagemode={UseOutlines},bookmarks=true,bookmarksopen=true,
+bookmarksopenlevel=0,bookmarksnumbered=true,hypertexnames=false,
+colorlinks,linkcolor={blue},citecolor={blue},urlcolor={red},
+pdfstartview={FitV},unicode,breaklinks=true]{hyperref}
+\usepackage{derivative}
+\usepackage{siunitx}
+\sisetup{
+	display-per-mode=fraction,
+	inline-per-mode=power,
+	separate-uncertainty,
+	separate-uncertainty-units=single,
+	list-final-separator=و,
+	list-pair-separator=و,
+	range-phrase=تا
+}
+\usepackage{datatool}
+\usepackage{cancel}
+\usepackage{graphicx,subfigure,wrapfig}
+\usepackage{color}
+\usepackage{pifont}
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
 
@@ -48,8 +69,6 @@
 %% \usepackage{lineno}
 
 %% You might want to define your own abbreviated commands for common used terms, e.g.:
-\newcommand{\kms}{km\,s$^{-1}$}
-\newcommand{\msun}{$M_\odot}
 
 \journal{Dr. Amin Faraji}
 
@@ -149,7 +168,7 @@ Particle Systems \sep Mathematical Physics \sep Fourier Analysis \sep Differenti
 
 \section{Introduction}
 \label{introduction}
-Periodic boundary conditions arise naturally in the study of waves and particles constrained to closed topologies. The mathematics of such systems, though conceptually simple, reveals rich physical behaviors. In one dimension, systems with periodic boundaries can be solved exactly, yielding insights into phenomena from quantum mechanics to elasticity. As the dimension increases, new challenges emerge. On a circle, the topology is uniform and easily parametrized, yielding to straightforward analysis via Fourier decomposition. On a sphere, the additional dimension introduces variability in the surface curvature, requiring more advanced methods like spherical harmonics. In three dimensions, modeling particles or waves constrained to regular convex polyhedra brings deeper obstacles, as these Platonic solids resist exact geometric parameterization.
+Periodic boundary conditions arise naturally in the study of waves and particles constrained to closed topologies. The mathematics of such systems, though conceptually simple, reveals rich physical behaviors. In one dimension, systems with periodic boundaries can be solved exactly. As the dimension increases, new challenges emerge. On a circle, the topology is uniform and easily parametrized, yielding to straightforward analysis via Fourier decomposition. On a sphere, the additional dimension introduces variability in the surface curvature, requiring more advanced methods like spherical harmonics. In three dimensions, modeling particles or waves constrained to regular convex polyhedron brings deeper obstacles, as these Platonic solids resist exact geometric parameterization.
 
 Approximation methods must therefore complement exact mathematical techniques in exploring these systems. The interplay of analytical, numerical, and geometric ideas is what makes periodic systems fascinating to study. When symmetry allows clean solutions, the mathematics elegantly explains the physics. And when intricacies of higher dimensions obstruct analysis, numerical methods and geometric intuition guide the way.
 
@@ -157,21 +176,65 @@ In this Article, we embark on a mathematical tour of periodic boundaries in mult
 
 \section{2D Spheres Revisited}
 \label{sec-2D}
-As established in foundational texts on wave phenomena (see \cite{georgiPhysicsWaves2015}), a prototypical model for cyclic wave propagation considers a discrete set of point particles confined to a circular domain. This framework relies on two key approximations: first, that interactions are strictly local, with each particle only directly influencing its immediate neighbors. Second, that the interparticle forces respond linearly to changes in separation relative to an equilibrium length. While undeniably reductionist, these assumptions prove sufficient to capture the salient physics of transverse wave transmission through the medium.
+\subsection{Analytical Description}
+As established in foundational texts on wave phenomena (see \cite{georgiPhysicsWaves2015}), a prototypical model for cyclic wave propagation considers a discrete set of point particles confined to a circular domain. This framework relies on two key approximations: first, that interactions are strictly local, with each particle only directly influencing its immediate neighbors. Second, that the inter-particle forces respond linearly to changes in separation relative to an equilibrium length. While undeniably reductionist, these assumptions prove sufficient to capture the salient physics of transverse wave transmission through the medium.
 
-Specifically, we examine a system of N identical particles of mass m regularly spaced around a ring of radius R. Identical harmonic springs, characterized by force constant k, link adjacent particles along the circumference. This geometry exhibits a continuous rotational symmetry - rotations by 2pi/N map the configuration onto itself. Our theoretical description should therefore not differentiate between the 2N symmetry-equivalent orientations. The sole measurable degree of freedom lies in the particles' relative displacements, as absolute positions along the circle can not be experimentally determined without first arbitrarily fixing a reference point.
+Specifically, we examine a system of $N$ identical particles of mass $m$ regularly spaced around a ring of radius $R$. Identical harmonic springs, characterized by force constant $k$, link adjacent particles along the circumference. This geometry exhibits a continuous rotational symmetry - rotations and reflections by $2\pi/N$ map the configuration onto itself. Our theoretical description should therefore not differentiate between the $2N$ symmetry-equivalent orientations. The sole measurable degree of freedom lies in the particles' relative displacements, as absolute positions along the circle can not be experimentally determined without first arbitrarily fixing a reference point.
 
 The simplicity of this model, alongside its inherent periodicity, motivate its study before tackling more intricate geometries in higher dimensions. Even within the confines of localized, linear interactions, analytical and computational techniques reveal rich wave behaviors arising from the cyclic topology. The mathematics provides profound and elegant insight into the underlying physics.
 
-As an elementary example, Figure 1 illustrates the case for N=4 particles. The fourfold rotational symmetry is evident, as is the periodic nature of the circular boundary. With the model established, we now embark on an in-depth analysis.
+As an elementary example, Figure \ref{fig-n4} illustrates the case for $N=4$ particles. The fourfold rotational symmetry is evident, as is the periodic nature of the circular boundary. With the model established, we now embark on an in-depth analysis.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering 
 	\includegraphics[width=0.25\textwidth]{../Figures/1D-4Particle-Springs.pdf}	
 	\caption{4 identically distributed point masses on a circle} 
 	\label{fig-n4}
 \end{figure}
 
+The configuration of the system can be fully specified by the central angle displacement $\theta_i$ of each particle $i$ relative to its initial angular position. As per the rotational symmetry, the labeling of individual particles carries no physical significance. We therefore characterize the state through the $N$-dimensional vector $\bm{\theta} = (\theta_1, \theta_2, ..., \theta_N)$ encompassing each particle's angular shift. For small oscillations, we expect the time evolution of $\bm{\theta}$ to follow a linear equation of the form:
+
+\begin{equation}
+	M\ddot{\bm{\theta}} + K\bm{\theta} = 0 \Rightarrow \ddot{\bm{\theta}} + W\bm{\theta} = 0
+	\label{eq-funda}
+\end{equation}
+
+The matrix $W$ belongs to the special class of circulant matrices which respect circular permutation symmetry. To derive its structure, consider the $i$th particle's interactions: since it only couples to its nearest neighbors, its motion is governed by:
+
+\begin{equation*}
+	\ddot{\theta}_i = a \theta_{i-1} + b \theta_i + c \theta_{i+1}
+\end{equation*}
+
+By symmetry, the coefficient $a$ equals $c$. For a system of $N$ particles, this yields an interaction matrix $W$ of the form:
+
+\begin{equation}
+	W =
+	\begin{pmatrix}
+		A & B & 0 & \dots & B \\
+		B & A & B & \dots & 0 \\
+		
+		0 & B & A & \dots & 0 \\
+		\vdots & \vdots & \vdots & \ddots & \vdots \\
+		B & 0 & 0 & \dots & A
+	\end{pmatrix}_{N \times N}
+	\label{eq-Wcirculant}	
+\end{equation}
+
+While the precise values of $A$ and $B$ do not qualitatively impact the dynamics, specific models may impose further constraints such as $A = -2B$ (see \cite{georgiPhysicsWaves2015}). Analytical solutions rely on the circulant structure, as discussed in \cite{grayToeplitzCirculantMatrices2006}.
+
+As discussed, the normal modes of this system should respect the circular symmetry. This mandates mode shapes of the form:
+\begin{equation*}
+	\bm{\beta}^{(k)} = \left(1, \omega^k, \omega^{2k},\dots, \omega^{N-1}\right) \qquad \omega = e^{2\pi i/N}
+\end{equation*}  
+where $\omega$ denotes the complex $N$th root of unity. The angular frequency $\omega_k$ of the $k$th mode takes the form:
+\[ \omega_k^2=A + 2B\cos\left(\frac{2k\pi}{N}\right) \qquad k = 0,1,\dots, N-1 \]
+This reveals intrinsic degeneracies arising from the system's symmetry. For even $N$, the $k=0$ and $k=N/2$ modes have real-valued eigenvectors, while the remaining $N-2$ modes come in complex-conjugate pairs which can be combined into degenerate real modes. The connection to Fourier analysis will become transparent in examining the continuum limit. The normal modes indeed correspond to a Discrete Fourier Transform, as elaborated in \cite{grayToeplitzCirculantMatrices2006}. The circulant structure enables analytical decomposition into these symmetry-dictated eigenmodes.
+
+In the Case where $A=-2B $ the relation simplifies to the simpler case below:
+\[ \omega_k^2 = \omega_0^2\sin^2\left(\frac{k\pi}{N}\right) \]
+
+\subsection{Numerical Description and Comparison with the Analytical Solution}
+Thus far, we have relied on linearized equations to enable an analytical treatment. To complement this, we now numerically simulate the full nonlinear particle interactions without simplifications. Details of the model and algorithms are in the supplementary simulation \href{https://github.com/a-samea/Waves-CourseProject/blob/main/Simulations/N%20Particle.ipynb}{Jupyter Notebook}. In short, we integrate the coupled second-order ODEs for the $N$ particles using an adaptive timestep fourth-order Runge-Kutta Python routine. By systematically increasing the imposed oscillation amplitude, we can validate the accuracy of our small amplitude analytical solutions and probe changes at higher displacements. These computations provide a flexible framework to incorporate future refinements like stochastic forces or dissipation. Most importantly, the nonlinear simulations both test the assumptions made earlier and better represent the true dynamics.
 
 
 

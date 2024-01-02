@@ -7,10 +7,10 @@ In this project we will analyze different systems and come up with a through int
 1. Abstract
     - [x] Write a short summary of what we did.
 1. N Particle system
-    - [ ] Derive the ODE for the N particle on a circle simple case (fully linear)
-    - [ ] Explain Circulant Matrices and how they can be used to solve the ODE
-    - [ ] Use the Symmetry argument to describe the harder N-particle case
-    - [ ] Approximate the ODE to get the modified linear ODE and solve it analytically
+    - [x] Derive the ODE for the N particle on a circle simple case (fully linear)
+    - [x] Explain Circulant Matrices and how they can be used to solve the ODE
+    - [x] Use the Symmetry argument to describe the harder N-particle case
+    - [x] Approximate the ODE to get the modified linear ODE and solve it analytically
     - [ ] Implement the solver in Python and compare it to the analytical solution. Find the error.
 1. Continuum Limit
     - [ ] Derive the PDE of propagation of a wave on a circle
