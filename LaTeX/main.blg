@@ -5,45 +5,45 @@ The style file: elsarticle-harv.bst
 Database file #1: zotero.bib
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Warning--empty journal in grayToeplitzCirculantMatrices2006
-You've used 2 entries,
+You've used 3 entries,
             2990 wiz_defined-function locations,
-            638 strings with 5384 characters,
-and the built_in function-call counts, 1029 in all, are:
-= -- 80
-> -- 20
-< -- 2
-+ -- 10
-- -- 6
-* -- 79
-:= -- 162
-add.period$ -- 5
-call.type$ -- 2
-change.case$ -- 11
-chr.to.int$ -- 2
-cite$ -- 3
-duplicate$ -- 80
-empty$ -- 89
-format.name$ -- 8
-if$ -- 192
+            644 strings with 5553 characters,
+and the built_in function-call counts, 1480 in all, are:
+= -- 113
+> -- 30
+< -- 3
++ -- 14
+- -- 9
+* -- 112
+:= -- 232
+add.period$ -- 9
+call.type$ -- 3
+change.case$ -- 16
+chr.to.int$ -- 3
+cite$ -- 4
+duplicate$ -- 119
+empty$ -- 133
+format.name$ -- 12
+if$ -- 281
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 15
-newline$ -- 24
-num.names$ -- 8
-pop$ -- 42
+missing$ -- 22
+newline$ -- 30
+num.names$ -- 12
+pop$ -- 63
 preamble$ -- 1
-purify$ -- 10
+purify$ -- 15
 quote$ -- 0
-skip$ -- 27
+skip$ -- 41
 stack$ -- 0
-substring$ -- 49
-swap$ -- 36
+substring$ -- 60
+swap$ -- 53
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 15
+type$ -- 21
 warning$ -- 1
-while$ -- 8
+while$ -- 11
 width$ -- 0
-write$ -- 40
+write$ -- 55
 (There was 1 warning)

@@ -13,9 +13,9 @@ In this project we will analyze different systems and come up with a through int
     - [x] Approximate the ODE to get the modified linear ODE and solve it analytically
     - [ ] Implement the solver in Python and compare it to the analytical solution. Find the error.
 1. Continuum Limit
-    - [ ] Derive the PDE of propagation of a wave on a circle
-    - [ ] Explain Periodic Boundary Conditions and how they can be used to solve the PDE
-    - [ ] Solve it completely based on initial conditions. Use Fourier Series.
+    - [x] Derive the PDE of propagation of a wave on a circle
+    - [x] Explain Periodic Boundary Conditions and how they can be used to solve the PDE
+    - [x] Solve it completely based on initial conditions. Use Fourier Series.
     - [ ] Create beautiful figures of the solution.
 1. 3D N-Particle Case (Regular Polyhedron)
     - [ ] Derive the ODE for the N particle on a regular polyhedron simple case (fully linear)

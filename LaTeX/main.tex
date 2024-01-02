@@ -236,6 +236,53 @@ In the Case where $A=-2B $ the relation simplifies to the simpler case below:
 \subsection{Numerical Description and Comparison with the Analytical Solution}
 Thus far, we have relied on linearized equations to enable an analytical treatment. To complement this, we now numerically simulate the full nonlinear particle interactions without simplifications. Details of the model and algorithms are in the supplementary simulation \href{https://github.com/a-samea/Waves-CourseProject/blob/main/Simulations/N%20Particle.ipynb}{Jupyter Notebook}. In short, we integrate the coupled second-order ODEs for the $N$ particles using an adaptive timestep fourth-order Runge-Kutta Python routine. By systematically increasing the imposed oscillation amplitude, we can validate the accuracy of our small amplitude analytical solutions and probe changes at higher displacements. These computations provide a flexible framework to incorporate future refinements like stochastic forces or dissipation. Most importantly, the nonlinear simulations both test the assumptions made earlier and better represent the true dynamics.
 
+\subsection{Continuum Limit}
+In taking the continuum limit, the number of particles $N$ approaches infinity, transforming the discrete mechanical system into a continuous cyclic domain. Our coordinate $\varphi$ becomes a continuous angular variable, with the wave displacement $u(\varphi,t)$ encapsulating the discrete particle shifts $\theta_j(t) $ through:
+\[ u(\varphi_j,t) = \theta_j(t) \quad \text{where:} \quad \varphi_j=\frac{2\pi j}{N} \quad j = 0,\dots,N-1 \]
+As $N$ tends to infinity, $\varphi_j$ transitions to a smooth continuous coordinate $\varphi$. The partial differential wave equation governing disturbances naturally emerges from the initial discrete equations of motion (Equation \ref{eq-funda}):
+\begin{equation}
+	\pdv[order={2}]{u}{t} = c^2 \pdv[order={2}]{u}{\varphi}, \quad u(\varphi,t) = u(\varphi+2\pi,t)
+	\label{eq-waveperiodic}
+\end{equation}
+
+The wave velocity $c$ descending directly from the interaction matrix elements $W$ reflects intrinsic timescales rather than typical speeds. More profoundly, the periodic continuity condition connecting values of $u $ at $\varphi$ and $\varphi+2\pi$ represents the imprint of the cyclic group symmetry. This maintenance of key features accompanies the facilitation of an analytical treatment of waves on the smooth circle.
+
+We can solve this equation (\ref{eq-waveperiodic}) by separation of variables. if we assume the form below for the disturbance the wave equation becomes:
+\[ u(\varphi,t) = \phi(\varphi)\tau(t) \Rightarrow \frac{1}{c^2\tau}\odv[order={2}]{\tau}{t} = \frac{1}{\phi}\odv[order={2}]{\phi}{\varphi}, \quad \phi(\varphi) = \phi(\varphi+2\pi) \]
+The SLODEs above have the periodic boundary condition imposed on the part involving $\varphi$. So each part can only be a negative constant which respects periodic conditions:
+\begin{align}
+	\odv[order={2}]{\phi}{\varphi} + m^2 \phi =0 &\Rightarrow m = 0 , 1 , 2 , \dots \label{eq-restrictions} \\
+	\odv[order={2}]{\tau}{t} + m^2c^2 \tau =0 &\Rightarrow \tau(t) = C_1 \cos\left(mct\right) + C_2 \sin(mct) \label{eq-timepart}
+\end{align}
+Also, the time translation invariance implies that there is no preferred phase for the time factor that cannot be considered in the angle factor. So, we can represent Eigenstates of the PDE by the following functions:
+\begin{align*}
+	& u_0(\varphi,t) = u_0 \\
+	& u_m(\varphi,t) = \left[a_m \cos(m\varphi) + b_m\cos(m\varphi)\right]\cos(mct+\theta_m)
+\end{align*}
+The set above creates a complete orthogonal set of answers for the wave equation \ref{eq-waveperiodic} respecting the periodic boundary conditions. As it turns out, the equation below is completely solved (see \cite{evansPartialDifferentialEquations2022}) and has some beatiful remarks.
+\begin{equation}
+	\label{eq-fullwave}\begin{aligned}
+		& \pdv[order={2}]{u}{t} = c^2 \pdv[order={2}]{u}{\varphi} \\
+		& u(\varphi,t) = u(\varphi+2\pi,t) \\
+		& u(\varphi,0) = f(\varphi) = f(\varphi + 2\pi) \\
+		& \dot{u}(\varphi,0) = g(\varphi + 2\pi)
+	\end{aligned}
+\end{equation}
+What is fascinating about the continuum limit is that the completely alternating case does not happen anymore and it is not an eigenmode. As you may recall we had the first normal mode in the discrete case with zero frequency. this is exactly $u_0$. The equation \ref{eq-fullwave} is fully solvable in a closed form. But for sake of simplicity we require $g(\varphi) = 0$ (i.e. initial velocity is zero). Then all $\theta_m$ will become zero and the coefficients are simply the Fourier Series of function $f$. i.e.:
+\begin{equation}
+	\begin{aligned}
+		&u_0 = \frac{1}{2\pi}\int_{0}^{2\pi}f(\varphi)\odif{\varphi} \\
+		&a_m = \frac{1}{\pi}\int_{0}^{2\pi}f(\varphi)\cos(m\varphi)\odif{\varphi} \\
+		&b_m = \frac{1}{\pi}\int_{0}^{2\pi}f(\varphi)\sin(m\varphi)\odif{\varphi}
+	\end{aligned}
+\end{equation}
+
+We can now appreciate the power of Fourier Series in this part. it is astonishing that even the couple degenerate Eigenvalues that we encountered previously are present here and for every non-zero $m$ we have two Eigenmodes. This is another reason why the alternating case does not exist in continuum limit. just because infinity is neither even nor odd and the alternating mode only happened in the even case. Another notable fact is that we had a relation between the number of mode and its angular velocity. Here we will replace some terms in it to make it compliant with continuous case. we would call such relation the \textit{Dispersion Relation} of system.
+\[ \omega_k^2 = \omega_0^2\sin^2\left(\frac{k\pi}{N}\right), \quad N \gg 1 \Rightarrow \omega_k \approx \omega_0 \frac{k\pi}{N} = mc \]
+Evidently the angular frequency of the mode $m$ is now given by the much simpler relation below:
+\begin{equation}
+	\omega_m = m c ,\qquad m = 0,1,2,\dots
+\end{equation}
 
 
 \section{Discussion}
