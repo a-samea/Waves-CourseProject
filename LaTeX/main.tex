@@ -125,10 +125,10 @@ pdfstartview={FitV},unicode,breaklinks=true]{hyperref}
 \ead{alirezasame@gmail.com}
 \author[second]{Hanie Hatami}
 \fntext[second]{99100614}
-\ead{alirezasame@gmail.com}
+\ead{Haniehatami7@gmail.com}
 \author[third]{Mehrnaz Rabiee}
 \fntext[third]{99100669}
-\ead{alirezasame@gmail.com}
+\ead{rbmhrnz@gmail.com}
 
 \begin{abstract}
 %% Text of abstract
@@ -233,8 +233,6 @@ This reveals intrinsic degeneracies arising from the system's symmetry. For even
 In the Case where $A=-2B $ the relation simplifies to the simpler case below:
 \[ \omega_k^2 = \omega_0^2\sin^2\left(\frac{k\pi}{N}\right) \]
 
-\subsection{Numerical Description and Comparison with the Analytical Solution}
-Thus far, we have relied on linearized equations to enable an analytical treatment. To complement this, we now numerically simulate the full nonlinear particle interactions without simplifications. Details of the model and algorithms are in the supplementary simulation \href{https://github.com/a-samea/Waves-CourseProject/blob/main/Simulations/N%20Particle.ipynb}{Jupyter Notebook}. In short, we integrate the coupled second-order ODEs for the $N$ particles using an adaptive timestep fourth-order Runge-Kutta Python routine. By systematically increasing the imposed oscillation amplitude, we can validate the accuracy of our small amplitude analytical solutions and probe changes at higher displacements. These computations provide a flexible framework to incorporate future refinements like stochastic forces or dissipation. Most importantly, the nonlinear simulations both test the assumptions made earlier and better represent the true dynamics.
 
 \subsection{Continuum Limit}
 In taking the continuum limit, the number of particles $N$ approaches infinity, transforming the discrete mechanical system into a continuous cyclic domain. Our coordinate $\varphi$ becomes a continuous angular variable, with the wave displacement $u(\varphi,t)$ encapsulating the discrete particle shifts $\theta_j(t) $ through:
@@ -255,44 +253,106 @@ The SLODEs above have the periodic boundary condition imposed on the part involv
 	\odv[order={2}]{\tau}{t} + m^2c^2 \tau =0 &\Rightarrow \tau(t) = C_1 \cos\left(mct\right) + C_2 \sin(mct) \label{eq-timepart}
 \end{align}
 Also, the time translation invariance implies that there is no preferred phase for the time factor that cannot be considered in the angle factor. So, we can represent Eigenstates of the PDE by the following functions:
-\begin{align*}
-	& u_0(\varphi,t) = u_0 \\
-	& u_m(\varphi,t) = \left[a_m \cos(m\varphi) + b_m\cos(m\varphi)\right]\cos(mct+\theta_m)
-\end{align*}
-The set above creates a complete orthogonal set of answers for the wave equation \ref{eq-waveperiodic} respecting the periodic boundary conditions. As it turns out, the equation below is completely solved (see \cite{evansPartialDifferentialEquations2022}) and has some beatiful remarks.
+\begin{equation}\label{eq-answers}
+	\begin{aligned}
+		u_0(\varphi,t) =& ~ a_0 + c_0 t \\
+		u_m(\varphi,t) =& ~ a_m \cos(m\varphi)\cos(mct) + b_m \sin(m\varphi)\cos(mct) \\
+		+& ~ c_m \cos(m\varphi)\sin(mct) + d_m \sin(m\varphi)\sin(mct)
+	\end{aligned}
+\end{equation}
+The set above creates a complete orthogonal set of answers for the wave equation \ref{eq-waveperiodic} respecting the periodic boundary conditions. What is fascinating about the continuum limit is that the completely alternating case does not happen anymore and it is not an eigenmode. As you may recall we had the first normal mode in the discrete case with zero frequency. this is exactly $u_0$. As it turns out, the equation below is completely solved (see \cite{evansPartialDifferentialEquations2022}) and has some beatiful remarks.
 \begin{equation}
 	\label{eq-fullwave}\begin{aligned}
 		& \pdv[order={2}]{u}{t} = c^2 \pdv[order={2}]{u}{\varphi} \\
 		& u(\varphi,t) = u(\varphi+2\pi,t) \\
 		& u(\varphi,0) = f(\varphi) = f(\varphi + 2\pi) \\
-		& \dot{u}(\varphi,0) = g(\varphi + 2\pi)
+		& \dot{u}(\varphi,0) =g(\varphi) =  g(\varphi + 2\pi)
 	\end{aligned}
 \end{equation}
-What is fascinating about the continuum limit is that the completely alternating case does not happen anymore and it is not an eigenmode. As you may recall we had the first normal mode in the discrete case with zero frequency. this is exactly $u_0$. The equation \ref{eq-fullwave} is fully solvable in a closed form. But for sake of simplicity we require $g(\varphi) = 0$ (i.e. initial velocity is zero). Then all $\theta_m$ will become zero and the coefficients are simply the Fourier Series of function $f$. i.e.:
+We assume here that $f$ and $g$ are well-behaved functions that have a Fourier Series. Every answer of the equation \ref{eq-fullwave} is of the form $\sum_{m=0}^{\infty} u_m(\varphi,t)$ where $u_m$s are given by the equation \ref{eq-answers}. Imposing the initial values in time we would have the following formulas for determining the constants:
 \begin{equation}
+	\label{eq-fouriercoeff}
 	\begin{aligned}
 		&u_0 = \frac{1}{2\pi}\int_{0}^{2\pi}f(\varphi)\odif{\varphi} \\
+		&c_0 = \frac{1}{2\pi}\int_{0}^{2\pi}g(\varphi)\odif{\varphi} \\
 		&a_m = \frac{1}{\pi}\int_{0}^{2\pi}f(\varphi)\cos(m\varphi)\odif{\varphi} \\
-		&b_m = \frac{1}{\pi}\int_{0}^{2\pi}f(\varphi)\sin(m\varphi)\odif{\varphi}
+		&b_m = \frac{1}{\pi}\int_{0}^{2\pi}f(\varphi)\sin(m\varphi)\odif{\varphi} \\
+		&c_m = \frac{1}{\pi mc}\int_{0}^{2\pi}g(\varphi)\cos(m\varphi)\odif{\varphi} \\
+		&d_m = \frac{1}{\pi mc}\int_{0}^{2\pi}g(\varphi)\sin(m\varphi)\odif{\varphi} 
 	\end{aligned}
 \end{equation}
 
-We can now appreciate the power of Fourier Series in this part. it is astonishing that even the couple degenerate Eigenvalues that we encountered previously are present here and for every non-zero $m$ we have two Eigenmodes. This is another reason why the alternating case does not exist in continuum limit. just because infinity is neither even nor odd and the alternating mode only happened in the even case. Another notable fact is that we had a relation between the number of mode and its angular velocity. Here we will replace some terms in it to make it compliant with continuous case. we would call such relation the \textit{Dispersion Relation} of system.
+We can now appreciate the power of Fourier Series in this part. it is astonishing that even the couple degenerate Eigenvalues that we encountered previously are present here. This is another reason why the alternating case does not exist in continuum limit. just because infinity is neither even nor odd and the alternating mode only happened in the even case. Another notable fact is that we had a relation between the number of mode and its angular velocity. Here we will replace some terms in it to make it compliant with continuous case. we would call such relation the \textit{Dispersion Relation} of system.
 \[ \omega_k^2 = \omega_0^2\sin^2\left(\frac{k\pi}{N}\right), \quad N \gg 1 \Rightarrow \omega_k \approx \omega_0 \frac{k\pi}{N} = mc \]
 Evidently the angular frequency of the mode $m$ is now given by the much simpler relation below:
 \begin{equation}
 	\omega_m = m c ,\qquad m = 0,1,2,\dots
 \end{equation}
+\subsection{Simulation of Longitudinal Waves}
+In this part we will use the power of programming to Simulate different Initial Values for the wave equation driven and we will create beautiful animations from it. You can see them in \href{https://github.com/a-samea/Waves-CourseProject/blob/main/Simulations/N%20Particle.ipynb}{this link}.
+
+
+\section{3D Spheres: A Through Analysis}
+
+\subsection{Tetrahedron and Cube}
+The five Platonic solids - tetrahedron, cube, octahedron, dodecahedron, and icosahedron - represent the only possible regular, convex polyhedra. Their high degree of symmetry makes them fascinating geometries within which to explore periodic boundaries and particle interactions. However, fully parametrizing their intricate shapes for mathematical analysis poses challenges.
+
+We focus first on the tetrahedron, the simplest Platonic solid with 4 equilateral triangular faces. Modeling an N-particle system on its surface requires using the polar and azimuthal angles $\theta$ and $\varphi$ to specify positions. The symmetry arguments we leveraged successfully on simpler topologies unfortunately do not apply directly here. Nevertheless, the uniform connectivity of the vertices through edges and 2D faces manifests itself in the form of the equations governing the angular particle displacements.
+
+Specifically, the interaction matrix attains a sparse block circulant form, with each subdivision corresponding to coupling between particles on a given triangular face. While deriving analytical solutions remains intractable, this structure lends itself naturally to computational techniques. By numerically evolving the coupled oscillator equations in time under different initial displacements, we can simulate waves propagating through the tetrahedral network.
+
+Beyond the tetrahedron lies the remaining Platonic solids, with more intricate shapes described by a greater multitude of faces and vertices. The cube, for example, requires additionally modeling motion perpendicular to the faces alongside angular displacements. The octahedron and icosahedron feature more complex networks of faces meeting at vertices. And the dodecahedron has twelve regular pentagonal faces arranged in a ring-like topology around the polyhedron.
+
+Studying particles and waves constrained to these geometries will push the boundaries of our mathematical methods. While solutions always formally exist, deriving analytical expressions proves prohibitive, and numerical techniques must bear the brunt of revealing the dynamics. The elegance of decomposition into normal modes gives way to directly integrating the equations of motion through time. And the orderly continuum limit subsides into intricacies of granularity and connectivity between finite nodes.
+
+Yet what rewards persistence is insight - the physics of disturbance transmission through these topological networks holds surprises mathematical symmetry tends to preclude. Pursuing the complexity of Platonic geometries through a numerical investigation promises revelations and even aesthetically pleasing simulations as waves wrap around these symmetric shapes.
+
+
+\subsection{Spherical Symmetry}
+In transitioning from discrete particles on Platonic solids to continuous waves on a sphere, a crucial concept emerges - that of spherical symmetry. Unlike the straightforward cyclic symmetry of a circle, the surface of a sphere treats all orientations equivalently rather than exhibiting discrete rotational periodicity. Mathematically harnessing this continuous invariance proves vital for solving physical systems.
+
+We characterize positions on the sphere through angular coordinates $\theta$ and $\varphi$. Spherical symmetry manifies that the physics must remain unchanged under rotations of these angles by any amount. 
+
+Additionally, the symmetry assures interactions must occur through scalar combinations of the angles $\theta$ and $\varphi$ rather than depending on their specific values. This enables expanding disturbing potentials or displacement fields in basis functions of the angular coordinates that transform appropriately under rotations. Practically, the vector spherical harmonics provide one such basis set that satisfies the covariance requirement.
+
+Through these techniques, the complexity of dynamics on the sphere give way to a simpler and more insightful description. The details become encapsulated in the expansion coefficients, while the governing physics reduces to algebraic relationships between conserved quantities. And visualizations of disturbances in terms of harmonic modes reveal Propagation patterns difficult to anticipate intuitively. The power of spherical symmetry emerges in converting intricacy into elegance - waves on a sphere become approachable when symmetry guides the mathematics.
+
+\subsection{2D Wave equation and its boundary condition}
+In taking the continuum limit of particles interacting on a sphere, a few key simplifications emerge due to the geometry and assumed physics. As the number of particles approaches infinity, the discrete granularity disappears, leaving only a smooth surface. The short-range linear interactions then yield only second-order spatial derivatives in the wave equation, producing the familiar Laplace operator. Additionally, the inherent spherical symmetry requires that the wave speed remain constant, rather than depending on angular orientation. And confinement to the exact spherical surface means there can be no dynamics along the radial direction - motion is restricted to tangent planes.
+
+Together, these conditions give rise to an elegant wave equation with suitable boundary conditions:
+
+\begin{equation*}
+	\nabla^2 u = \frac{1}{c^2}\pdv[order={2}]{u}{t} 
+\end{equation*}
+
+Here $u(\theta,\varphi,t)$ denotes the wave displacement at time $t$ on the sphere parametrized by angular coordinates. The associated boundary condition is one of periodicity - wave amplitudes, frequencies, and phases must match when compared at opposing boundaries corresponding to the same physical location. We can expand the Laplacian to more expanded form below:
+\begin{equation}
+	\begin{aligned}
+		&\frac{1}{\sin\theta}\left[\pdv{}{\theta}\left(\sin\theta\pdv{u}{\theta}\right) +\frac{1}{\sin\theta}\pdv[ord={2}]{u}{\varphi}\right] =  \frac{1}{v^2}\pdv[order={2}]{u}{t} \\
+		&u(\theta+\pi,\varphi,t) = u(\theta,\varphi,t)\\
+		&u(\theta,\varphi+2\pi,t) = u(\theta,\varphi,t)
+	\end{aligned}
+\end{equation}
+
+As discussed earlier, this equation is completely solvable and the PDE is consistent too. In order to derive the general formula we would need to use seperation of variables and periodic boundary condition together. which follows:
+\begin{align*}
+	 u_{\ell,m}(\theta,\varphi,t) = T_\ell(t) \Theta_{\ell,m}(\theta) \Phi_m(\varphi) 
+\end{align*}
+
+The answer to above Equation is the Famous "Spherical Harmonics" and once again, they create a complete orthogonal set of answers which we use with Fourier's trick to expand initial values based on the harmonics.
+
+The important point here is that we only have full integer $\ell$s and there is no half-integer ones. this is due to periodic behavior of the wave function.
+
+
+\subsection{Molecular Dynamics Simulation On a Sphere}
 
 
 \section{Discussion}
 %%\label{}
+statistical mechanics - information - applicability - beauty of symmetries
 
-\section{Summary and conclusions}
-%%\label{}
-
-
-\section*{Acknowledgements}
+\section*{Acknowledgments}
 Thanks to ...
 
 %% The Appendices part is started with the command \appendix;
